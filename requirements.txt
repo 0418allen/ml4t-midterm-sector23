@@ -1,0 +1,14 @@
+# Environment: the textbook repository's uv environment (Python 3.14) plus:
+pandas
+numpy
+polars
+pyarrow
+scipy
+scikit-learn
+lightgbm
+shap
+pyyaml
+matplotlib
+reportlab
+python-pptx
+jupytext

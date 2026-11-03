@@ -1,0 +1,119 @@
+# Trading setup v1 — written and committed before any backtest (ML4T Ch. 6 contract).
+# Parameter tuning stays inside v1; changing the mechanics (e.g. long/short, new cost component) means v2.
+setup_version: v1
+strategy_id: sector23_momentum_volgate
+
+hypothesis:
+  mechanism: >
+    Industry and sector returns persist over one to six months because information diffuses slowly
+    across industries and investors rebalance sector allocations gradually (industry momentum,
+    flow predictability). The persistence crashes when market volatility spikes and leadership
+    reverses abruptly, so the rotation signal should be traded only in calm-to-normal volatility states.
+  source_of_edge: [flow_predictability, risk_compensation]
+  falsification:
+    - Validation daily rank IC of the momentum rule is not positive in the low-volatility state.
+    - The gated rule does not beat the ungated rule on validation net Sharpe.
+    - Pre-registered confirmatory test (below) fails on the holdout.
+
+data:
+  route: A_textbook_universe_extended   # same Yahoo source as the textbook ETF case study, re-downloaded to add 2026
+  source: Yahoo Finance via yfinance (adjusted OHLCV; split-adjusted, dividend-unadjusted close for dollar volume and per-share costs)
+  start: '2019-01-02'
+  end: '2026-10-30'
+  frequency: daily
+  calendar: NYSE
+  timestamp_semantics: bar date = US session date; close known at 16:00 New York; open at 09:30 New York
+
+universe:
+  tradable: [IYR, XLB, XLC, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, QQQ, IBB, ITA, ITB, KRE, OIH, SOXX, XBI, XME, XRT, USO, GLD]
+  auxiliary_not_traded: [SPY, TLT, AGG]   # state variables, beta, benchmarks
+  cash_proxy: BIL            # held in the no-trade state and for un-invested overlay weight; never ranked
+  eligibility: point_in_time
+  liquidity_rule: trailing 126-session median dollar volume (close x volume) >= 10_000_000 USD, computed through t
+  history_rule: at least 126 sessions of history at t
+  dedup_rule: none (fixed list chosen by the team; overlap such as QQQ/XLK/SOXX is kept and disclosed)
+
+decision:
+  snapshot: month_end_close
+  execution: next_session_open
+  holding: until the next rebalance execution (about 21 sessions)
+
+admissible_information:
+  prices_volume: up to and including the close of t
+  fundamentals: none
+  longest_feature_lookback_sessions: 147   # 21-day SPY vol ranked over 126 sessions
+
+score_to_trade:
+  selection: top_k
+  top_k: 5
+  sizing: equal_weight            # null allocator; inverse_vol (63 sessions) is the comparison allocator
+  direction: long_only
+  no_trade_state: SPY 21-day realised-vol percentile vs its trailing 126 sessions >= 0.80 -> 100% cash_proxy
+
+constraints:
+  leverage: 1.0
+  shorting: false
+  max_weight: 0.20
+  checked_inside_simulation: true
+
+risk_overlay:
+  type: volatility_target
+  target_annual_vol: 0.10
+  lookback_sessions: 63
+  information: portfolio weights and returns up to the close of t (trade at t+1 open)
+  remainder: cash_proxy
+  max_exposure: 1.0
+
+costs:
+  class: per_share_plus_tiered_half_spread
+  commission_per_share: 0.0035
+  half_spread_usd: {SPY: 0.005, QQQ: 0.005, sector_XL: 0.01, default: 0.02}
+  sweep_multiples: [0, 0.5, 1, 2, 4, 8]
+  stress_spread_multiple: 3
+
+label:
+  type: fixed_horizon_return
+  name: fwd_oo_21
+  definition: open[t+22] / open[t+1] - 1   # anchored to the next-open fill
+  horizon_sessions: 21
+  target_for_models: cross-sectional percentile of fwd_oo_21
+
+evaluation:
+  scheme: walk_forward_expanding
+  training_start: '2020-01-02'
+  retrain_cadence: 6 months
+  step: 6 months
+  validation_folds:
+    - ['2022-01-01', '2022-06-30']
+    - ['2022-07-01', '2022-12-31']
+    - ['2023-01-01', '2023-06-30']
+    - ['2023-07-01', '2023-12-31']
+    - ['2024-01-01', '2024-06-30']
+    - ['2024-07-01', '2024-12-31']
+    - ['2025-01-01', '2025-06-30']
+    - ['2025-07-01', '2025-12-31']
+  label_buffer_sessions: 21     # purging: every training label ends before validation starts
+  feature_buffer_sessions: 0    # no embargo needed: training never follows validation
+  hyperparameter_tuning: fixed_holdout (walk-forward validation folds only; never the holdout)
+  development_end: '2025-12-31'
+  holdout: ['2026-01-01', '2026-10-30']   # sealed; never seen by anyone on the team; touched once in notebooks/06_holdout.py
+  yardstick: mean daily Spearman IC with Newey-West 95% CI (lag 21)
+
+models:
+  ladder:
+    rule: vol-scaled 126-day momentum (ret_126d / vol_63d), gated
+    ridge: {alpha: [0.01, 0.1, 1, 10, 100, 1000, 10000, 100000]}
+    lightgbm: {objective: l1, learning_rate: 0.05, max_trees: 500, early_stopping: 50, num_leaves: [7, 15], min_child_samples: [300, 1000], max_depth: 4}
+    ensemble: equal-weight average of the three rungs' per-date z-scored scores
+  selection: highest mean validation IC; deployed strategy = selected rung + equal weight + gate + volatility target
+
+benchmarks: [equal_weight_eligible_universe, SPY_buy_and_hold, 60_40_SPY_AGG]
+
+confirmatory_test:
+  metric: holdout net Sharpe of deployed strategy minus equal-weight benchmark Sharpe (paired, 21-day block bootstrap)
+  threshold: 95% CI lower bound > 0
+  secondary: holdout daily IC Newey-West 95% CI excludes zero
+
+prior_trials: {v1_textbook_pipeline: 734, v2_69_etfs: 52, v3_54_etfs: 60}
+
+seeds: {lightgbm: 42, bootstrap: 7}
