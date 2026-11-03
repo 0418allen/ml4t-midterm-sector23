@@ -1,0 +1,11 @@
+Commitment,Value
+Training window,expanding from 2020-01-02
+Step / retraining cadence,6 months / 6 months
+Label horizon,"21 sessions, open[t+22] / open[t+1] - 1"
+Longest feature lookback,147 sessions
+Validation folds,2022-01-01..2022-06-30; 2022-07-01..2022-12-31; 2023-01-01..2023-06-30; 2023-07-01..2023-12-31; 2024-01-01..2024-06-30; 2024-07-01..2024-12-31; 2025-01-01..2025-06-30; 2025-07-01..2025-12-31
+Label buffer (purge) / feature buffer (embargo),21 / 0 trading sessions
+Hyperparameter tuning,fixed_holdout (walk-forward validation folds only; never the holdout)
+Holdout (sealed),2026-01-01..2026-10-30
+Yardstick,mean daily Spearman IC with Newey-West 95% CI (lag 21)
+Confirmatory test,"holdout net Sharpe of deployed strategy minus equal-weight benchmark Sharpe (paired, 21-day block bootstrap); pass if 95% CI lower bound > 0"

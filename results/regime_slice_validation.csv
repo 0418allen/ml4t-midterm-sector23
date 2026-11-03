@@ -1,0 +1,13 @@
+strategy,regime,days,sharpe,max_dd
+rule_mom126vs|ew|gate|vt,low vol / up trend,420,0.902480974957752,-0.12623978033635364
+rule_mom126vs|ew|gate|vt,low vol / down trend,94,-0.3987291098913768,-0.06379804924573407
+rule_mom126vs|ew|gate|vt,high vol / up trend,324,0.2798123447642656,-0.06505042734414457
+rule_mom126vs|ew|gate|vt,high vol / down trend,163,-0.9844243160489733,-0.07396403419408348
+rule_mom126vs|ew|gate|vt,low vol / up trend,420,0.902480974957752,-0.12623978033635364
+rule_mom126vs|ew|gate|vt,low vol / down trend,94,-0.3987291098913768,-0.06379804924573407
+rule_mom126vs|ew|gate|vt,high vol / up trend,324,0.2798123447642656,-0.06505042734414457
+rule_mom126vs|ew|gate|vt,high vol / down trend,163,-0.9844243160489733,-0.07396403419408348
+bench_ew_universe,low vol / up trend,420,1.030075077739801,-0.12186216793637694
+bench_ew_universe,low vol / down trend,94,-0.7170725040823026,-0.1380529351203218
+bench_ew_universe,high vol / up trend,324,1.4493650245354366,-0.08232537665619433
+bench_ew_universe,high vol / down trend,163,-0.7821296568320073,-0.29476435944155355

@@ -1,0 +1,20 @@
+feature,role,driver_hypothesis,lookback,representation,known_failure_mode
+mom_126_vs,Signal,Persistence / under-reaction (flows),"126d, monthly","126d return / 63d vol, cross-sectional rank",Momentum crashes at volatility spikes and trend reversals
+mom_126_skip21,Signal,Persistence without 1-month reversal,126d skip 21d,"Return, rank",Same as momentum; crowding
+mom_63,Signal,Medium-term persistence,63d,"Return, rank",Choppy markets
+ret_21,Signal,Short-term reversal (liquidity provision),21d,"Return, rank",Trending markets
+ret_5,Signal,Weekly reversal,5d,"Return, rank",Noise at a monthly hold
+dist_63d_high,Signal,Anchoring to recent high,63d,"Distance to max, rank",Breakouts in crises
+sma50_ratio,Signal,Trend-following flows,50d,"Price / SMA, rank",Whipsaw
+vol_63,Signal,Risk compensation vs low-vol anomaly,63d,"Annualised vol, rank",Sign depends on regime
+idio_vol_63,Signal,Idiosyncratic risk premium,63d,"Residual vol vs SPY, rank",Unstable beta estimate
+beta_spy_63,Signal,Equity-risk compensation / betting-against-beta,63d,"Beta to SPY, rank",Flips sign in sell-offs
+max_dd_63,Signal,Loss aversion / distress,126d (63 within 63),"Worst drawdown, rank",Rebounds after crashes
+volume_chg_21_63,Signal,Attention and flow pressure,63d,"Log volume ratio, rank",Event-driven volume spikes
+range_21,Signal,Risk compensation (trading range),21d,"Mean (H-L)/C, rank",Single shock dominates
+rsi_14,Signal,Overbought/oversold reversal,14d (EWM),"Oscillator, rank",Strong trends stay overbought
+dollar_vol_126,Signal,Liquidity premium,126d,"Log median $ volume, rank","Size proxy, slow"
+spy_vol_pct,State,Risk environment: momentum works in calm states,21d vol ranked over 126d,Percentile vs own history,Single shock dominates
+spy_trend_126,State,Market trend regime,126d,Return,Late at turning points
+xs_dispersion_21,State,Opportunity set for rotation,21d,Cross-sectional std,Driven by one outlier ETF
+spy_tlt_corr_63,State,Hedge regime (stock-bond correlation),63d,Level,Non-synchronous trading

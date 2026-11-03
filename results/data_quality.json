@@ -1,0 +1,142 @@
+{
+ "rows_adjusted": 47520,
+ "symbols": 27,
+ "sessions": 1760,
+ "duplicate_symbol_dates": 0,
+ "missing_values": {
+  "open": 0,
+  "high": 0,
+  "low": 0,
+  "close": 0,
+  "volume": 0
+ },
+ "ohlc_violations": {
+  "high_below_low": 0,
+  "close_outside_high_low": 0,
+  "open_outside_high_low": 0,
+  "non_positive_price": 0,
+  "zero_volume": 0
+ },
+ "symbols_leaving_sample": 0,
+ "symbols_entering_after_start": 0,
+ "sessions_per_symbol_min_max": [
+  1760,
+  1760
+ ],
+ "missing_handling": "no forward-fill; a missing bar would be excluded and the simulator refuses to fill on it",
+ "daily_moves_gt_15pct": [
+  [
+   "2020-03-09",
+   "KRE",
+   -0.155
+  ],
+  [
+   "2020-03-09",
+   "OIH",
+   -0.322
+  ],
+  [
+   "2020-03-09",
+   "USO",
+   -0.253
+  ],
+  [
+   "2020-03-09",
+   "XLE",
+   -0.201
+  ],
+  [
+   "2020-03-16",
+   "ITB",
+   -0.202
+  ],
+  [
+   "2020-03-16",
+   "IYR",
+   -0.169
+  ],
+  [
+   "2020-03-16",
+   "SOXX",
+   -0.152
+  ],
+  [
+   "2020-03-18",
+   "USO",
+   -0.175
+  ],
+  [
+   "2020-03-24",
+   "ITB",
+   0.167
+  ],
+  [
+   "2020-03-24",
+   "OIH",
+   0.178
+  ],
+  [
+   "2020-03-24",
+   "XLE",
+   0.16
+  ],
+  [
+   "2020-04-02",
+   "USO",
+   0.167
+  ],
+  [
+   "2020-04-03",
+   "USO",
+   0.155
+  ],
+  [
+   "2020-04-21",
+   "USO",
+   -0.251
+  ],
+  [
+   "2020-11-09",
+   "KRE",
+   0.154
+  ],
+  [
+   "2020-11-09",
+   "OIH",
+   0.189
+  ],
+  [
+   "2025-04-09",
+   "SOXX",
+   0.186
+  ]
+ ],
+ "universe": {
+  "decisions": 73,
+  "eligible_min": 23,
+  "eligible_max": 23,
+  "kept_min": 23,
+  "kept_max": 23,
+  "never_eligible": [],
+  "highest_pair_correlations_2020_2025": {
+   "QQQ/XLK": 0.976,
+   "OIH/XLE": 0.914,
+   "SOXX/XLK": 0.909,
+   "IBB/XBI": 0.907,
+   "XLF/XLI": 0.895,
+   "QQQ/SOXX": 0.893
+  }
+ },
+ "source_check_vs_textbook": {
+  "overlap_rows": 40689,
+  "return_correlation": 0.999999999933493,
+  "share_abs_diff_gt_10bp": 0.0
+ },
+ "corporate_action_check": {
+  "symbol": "USO",
+  "event": "1:8 reverse split 2020-04-29",
+  "max_abs_daily_change_unadjusted": 7.4507037713115984,
+  "max_abs_daily_change_adjusted": 0.2531500202969871,
+  "note": "prices_raw.parquet is split-adjusted by Yahoo; dollar volume (close x volume) is invariant to the split"
+ }
+}

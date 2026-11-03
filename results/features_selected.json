@@ -1,0 +1,19 @@
+{
+ "model_features": [
+  "vol_63",
+  "beta_spy_63",
+  "spy_vol_pct",
+  "spy_trend_126",
+  "xs_dispersion_21",
+  "spy_tlt_corr_63"
+ ],
+ "merged": {
+  "mom_126_skip21": "mom_126_vs",
+  "sma50_ratio": "ret_21",
+  "max_dd_63": "vol_63",
+  "range_21": "vol_63",
+  "rsi_14": "ret_21"
+ },
+ "round_trip_cost_bps": 4.710834898702525,
+ "searched_set": 15
+}

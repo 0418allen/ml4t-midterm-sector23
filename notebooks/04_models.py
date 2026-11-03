@@ -160,7 +160,8 @@ shap_tab = pd.DataFrame({"mean_abs_shap": imp.mean(1), "sign_corr_mean": sign.me
 shap_tab.to_csv(os.path.join(RES, "shap_summary.csv"))
 
 # %% conformal intervals (deployed rung, rank scale): calibrate on the previous fold, cover the next
-resid = (panel.y - pred[chosen[deployed]]).where(panel.label_end <= DEV_END)
+score_rank = pred[chosen[deployed]].groupby(panel.date).rank(pct=True) - 0.5     # same scale as the target (per-date percentile - 0.5)
+resid = (panel.y - score_rank).where(panel.label_end <= DEV_END)
 conf = []
 for k in range(1, NF):
     cal = resid[(panel.date >= folds[k - 1][0]) & (panel.date <= folds[k - 1][1])].dropna().abs()

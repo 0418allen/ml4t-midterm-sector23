@@ -1,0 +1,76 @@
+{
+ "frozen_at": "2026-11-03T18:52:39",
+ "git_commit_before_freeze": "7202343",
+ "code_sha256": "362e5a0daf9f3caabaa4b06861c09bda1c88cffad4c419e574cef3f0d69f8bad",
+ "deployed_strategy": "rule_mom126vs|ew|gate|vt",
+ "baseline": "rule_mom126vs|ew|gate|vt",
+ "comparison_strategies": [
+  "lgb_l7_m1000|ew|gate|vt",
+  "ensemble|ew|gate|vt",
+  "rule_mom126vs|ew|gate|raw",
+  "rule_mom126vs|ew|nogate|vt"
+ ],
+ "model_selection": {
+  "chosen": {
+   "rule": "rule_mom126vs",
+   "ridge": "ridge_a10000",
+   "lgb": "lgb_l7_m1000",
+   "ensemble": "ensemble"
+  },
+  "deployed_rung": "rule",
+  "deployed_model": "rule_mom126vs",
+  "features": [
+   "vol_63",
+   "beta_spy_63",
+   "spy_vol_pct",
+   "spy_trend_126",
+   "xs_dispersion_21",
+   "spy_tlt_corr_63"
+  ],
+  "ridge_alpha": 10000,
+  "lgb_cfg": {
+   "objective": "l1",
+   "learning_rate": 0.05,
+   "n_estimators": 500,
+   "max_depth": 4,
+   "subsample": 0.8,
+   "subsample_freq": 1,
+   "colsample_bytree": 0.8,
+   "random_state": 42,
+   "verbose": -1,
+   "n_jobs": 4,
+   "num_leaves": 7,
+   "min_child_samples": 1000
+  },
+  "lgb_best_iters": {
+   "lgb_l7_m1000|0": 1,
+   "lgb_l7_m1000|1": 1,
+   "lgb_l7_m1000|2": 35,
+   "lgb_l7_m1000|3": 1,
+   "lgb_l7_m1000|4": 82,
+   "lgb_l7_m1000|5": 20,
+   "lgb_l7_m1000|6": 47,
+   "lgb_l7_m1000|7": 2
+  },
+  "shap_rank_stability": 0.4358828716435185
+ },
+ "benchmarks": [
+  "bench_ew_universe",
+  "bench_spy",
+  "bench_6040"
+ ],
+ "trial_counts": {
+  "variants": 60,
+  "inclusive": 906
+ },
+ "sr_var_daily_trials": 2.4170810056331702e-05,
+ "confirmatory_test": {
+  "metric": "holdout net Sharpe of deployed strategy minus equal-weight benchmark Sharpe (paired, 21-day block bootstrap)",
+  "threshold": "95% CI lower bound > 0",
+  "secondary": "holdout daily IC Newey-West 95% CI excludes zero"
+ },
+ "holdout": [
+  "2026-01-01",
+  "2026-10-30"
+ ]
+}

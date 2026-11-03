@@ -1,0 +1,6 @@
+Level,Check,Result
+Values,Every feature uses bars dated <= t (close of t); label starts at the t+1 open,PASS
+Values,Non-price data,N/A (prices and volume only)
+Universe,"Eligibility (ADV, history) computed from the trailing 126 sessions at each t",PASS
+Universe,Delisted / removed ETFs included,FAIL (disclosed): fixed list of 23 survivors chosen in 2026 by the team; no delisted sector ETFs
+Identifiers,Ticker changes / reuse handled with effective dates,PASS (no ticker changes in 2019-2025 for these symbols; symbols are stable keys)
