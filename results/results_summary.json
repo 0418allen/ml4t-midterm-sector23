@@ -1,0 +1,19 @@
+{
+ "pattern": "never resolved: the deployed Sharpe interval spans zero in validation and in the holdout",
+ "dsr_validation": [
+  0.633302684588798,
+  0.5807999151413117
+ ],
+ "dsr_holdout": [
+  0.4593741519675107,
+  0.43474232119961365
+ ],
+ "breakeven_raw": [
+  30.775994495153338,
+  4.915477783487928
+ ],
+ "breakeven_overlay": [
+  35.52855213046153,
+  4.176140376167246
+ ]
+}

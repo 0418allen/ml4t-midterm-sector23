@@ -33,3 +33,6 @@ Bug fix (not a trial): 04 conformal residuals used the raw deployed score; when 
 ### 2026-11-03T18:52 (commit 7202343)
 05 backtest (validation 2021-12-31..2025-12-31): 60 strategy variants. Deployed rule_mom126vs|ew|gate|vt: Sharpe 0.36, MDD -7.9%; rule rule_mom126vs|ew|gate|vt: 0.36; EW universe 0.44. Break-even 36 bp/leg. DSR(N=60) 0.63; DSR(N=906) 0.58.
 **FROZEN** at 2026-11-03T18:52:39 (code sha256 362e5a0daf9f). Holdout not yet touched.
+
+### 2026-11-03T18:53 (commit 9577d37)
+06 traded the holdout once (2025-12-31..2026-10-30) and saved its artifacts, then failed while writing the summary JSON (deployed == baseline -> duplicate row). 06b computed the summary from the saved artifacts without re-running anything. Deployed rule_mom126vs|ew|gate|vt: excess Sharpe 0.07 [-2.01, 1.45]. Confirmatory test (minus EW): -1.82 [-3.60, +0.50] -> NOT PASSED. Holdout IC -0.037 [-0.174, +0.099].

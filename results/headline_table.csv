@@ -1,0 +1,6 @@
+Stage,Metric,Validation (2022-2025),Holdout (2026-01..2026-10),Benchmark (val / holdout)
+Signal,Daily IC [NW 95% CI]; ICIR; share of positive folds (val) / months (holdout),"+0.010 [-0.057, +0.078]; 0.16; 4/8","-0.037 [-0.174, +0.099]; -; 44.4%",-
+"Portfolio (top-5 EW + gate, before costs and overlay)",Gross excess Sharpe [CI]; max DD; 2-way turnover/yr,"0.29 [-0.55, 1.16]; -14.1%; 11.4x","0.13 [-1.94, 1.50]; -10.8%; 15.9x",EW universe 0.44 / 1.88; SPY 0.46 / 0.89; 60/40 0.29 / 0.61
+Costs,Net excess Sharpe at assumed cost; break-even (bp per leg),0.28; 31 (with overlay 36),0.11; 5 (with overlay 4),-
+Risk overlay (10% vol target),Net excess Sharpe; max DD,0.36; -7.9%,0.07; -6.4%,-
+Inference,Deflated Sharpe (N=60 / N=906); minimum track record (years),0.63 / 0.58; 49,0.46 / 0.43; 1242,-

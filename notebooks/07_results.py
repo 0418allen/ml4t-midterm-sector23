@@ -84,7 +84,7 @@ print(head.to_string(index=False))
 print("pattern:", pattern)
 
 # %% Figure 1: equity curves with the validation/holdout boundary
-lab = {DEP: f"Deployed: {RUNG} + gate + vol target", RULE: "Non-ML baseline: momentum rule + gate + vol target", "bench_ew_universe": "Equal-weight universe", "bench_spy": "SPY"}
+lab = {DEP: f"Deployed: {RUNG} + gate + vol target", RULE: "Deployed = non-ML baseline: momentum rule + gate + vol target" if DEP == RULE else "Non-ML baseline: momentum rule + gate + vol target", "bench_ew_universe": "Equal-weight universe", "bench_spy": "SPY"}
 fig, ax = plt.subplots(figsize=(7, 3))
 for k, l in lab.items():
     s = pd.concat([vr[k].dropna(), hr[k].dropna()])
