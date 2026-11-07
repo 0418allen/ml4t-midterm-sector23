@@ -1,5 +1,7 @@
 # ML4T Midterm Proposal — Sector-ETF momentum with a volatility-state gate
 
+Repository: https://github.com/0418allen/ml4t-midterm-sector23
+
 One complete lap of the ML4T workflow on a fixed list of 23 ETFs (all in the textbook ETF universe), 2019–2026.
 Development 2020-01..2025-12 (walk-forward, eight half-year folds 2022–2025); **holdout 2026-01-02..2026-10-30, fresh data never seen before, sealed and touched once**.
 
@@ -16,6 +18,7 @@ Universe: IYR, XLB, XLC, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, QQQ, IBB, ITA, 
 Python 3.12+ (results produced on 3.14.7). Exact versions: `requirements.lock.txt`.
 
 ```bash
+git clone https://github.com/0418allen/ml4t-midterm-sector23.git && cd ml4t-midterm-sector23
 uv venv && uv pip install -r requirements.lock.txt      # or: python -m venv .venv && pip install -r requirements.lock.txt
 .venv/bin/python data/build_dataset.py                    # downloads data/prices_*.parquet from Yahoo (yfinance)
 .venv/bin/python notebooks/07_results.py                  # headline table (results/headline_table.csv) + figures

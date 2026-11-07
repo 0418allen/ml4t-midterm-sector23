@@ -78,7 +78,7 @@ ct = hs["confirmatory_test"]
 TICK = "IYR, XLB, XLC, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, QQQ, IBB, ITA, ITB, KRE, OIH, SOXX, XBI, XME, XRT, USO, GLD"
 # ===================================================================== title page content + Section 1
 p("<font size=16><b>Sector-ETF Momentum with a Volatility-State Gate: an ML4T Midterm Proposal</b></font>", ss["Title"])
-p(f"Setup v1 &nbsp;|&nbsp; 23 sector/industry ETFs + QQQ, USO, GLD, 2019-2026 (Yahoo) &nbsp;|&nbsp; Development 2020-01..2025-12, sealed holdout 2026-01..2026-10 (fresh data, touched once) &nbsp;|&nbsp; Repository: ml4t-midterm-sector23 (git {fz['git_commit_before_freeze']} at setup)", CAP)
+p(f"Setup v1 &nbsp;|&nbsp; 23 sector/industry ETFs + QQQ, USO, GLD, 2019-2026 (Yahoo) &nbsp;|&nbsp; Development 2020-01..2025-12, sealed holdout 2026-01..2026-10 (fresh data, touched once) &nbsp;|&nbsp; Repository: github.com/0418allen/ml4t-midterm-sector23 (setup commit {fz['git_commit_before_freeze']})", CAP)
 p(f"<b>Abstract.</b> We test whether sector and industry ETF trends, traded only outside high-volatility states, predict next-month returns, and whether Ridge or LightGBM improves on a momentum rule. "
   f"Under a pre-registered walk-forward protocol ({NF} half-year folds, 2022-2025) no model beat the rule, so the rule was deployed (validation IC {f3(vic.loc[M,'ic'])} [{f3(vic.loc[M,'lo'])}, {f3(vic.loc[M,'hi'])}], net excess Sharpe {f2(vb.loc[DEP,'sharpe'])}); "
   f"momentum had no IC in calm states and the gate made the rule worse, falsifying our mechanism on validation. On the fresh 2026 holdout the deployed strategy earned an excess Sharpe of {f2(hb.loc[DEP,'sharpe'])} "
