@@ -13,18 +13,25 @@ Universe: IYR, XLB, XLC, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, QQQ, IBB, ITA, 
 | Research ledger / run log | `ledger/research_ledger.md`, `run_log.csv` |
 
 ## Reproduce from the repository root
-Environment: the textbook repository's `uv` environment (Python 3.14); versions in `requirements.lock.txt`.
+Python 3.12+ (results produced on 3.14.7). Exact versions: `requirements.lock.txt`.
 
 ```bash
-TB=~/Downloads/machine-learning-for-trading                         # textbook repo (provides the env; 02 also reads its ETF files for checks)
-uv run --project $TB python data/build_dataset.py                    # downloads data/prices_*.parquet from Yahoo (yfinance)
-uv run --project $TB python notebooks/07_results.py                  # headline table + figures from registered results
+uv venv && uv pip install -r requirements.lock.txt      # or: python -m venv .venv && pip install -r requirements.lock.txt
+.venv/bin/python data/build_dataset.py                    # downloads data/prices_*.parquet from Yahoo (yfinance)
+.venv/bin/python notebooks/07_results.py                  # headline table (results/headline_table.csv) + figures
 ```
+
+Checked on a fresh clone with a fresh environment (2026-11-07):
+- 07 on the committed data files reproduces `results/headline_table.csv` exactly.
+- After re-downloading, two holdout cells move slightly: the holdout gross-Sharpe CI ([-1.94, 1.50] -> [-1.89, 1.51]) and the holdout Deflated Sharpe (0.46/0.43 -> 0.47/0.45).
+  Cause: after our download Yahoo revised the dividend adjustment of the three monthly-distributing bond ETFs (BIL, TLT, AGG). BIL is the risk-free series for excess returns,
+  so statistics on holdout excess returns shift; the strategy returns themselves do not change. To get the exact numbers, use the committed parquet files (`git checkout data/`).
 
 Stage by stage: `01_setup` (protocol, ledger) → `02_data` (PIT universe, quality report) → `03_labels_features` (labels, feature table, five-gate triage)
 → `04_models` (ladder, paired comparison, SHAP, conformal) → `05_backtest` (costs, allocators, risk, inference, **freeze**) → `06_holdout` (single touch)
 → `06b_holdout_summary` (summary from 06's saved output) → `07_results`.
-Then `uv run --project $TB --with reportlab python report/build_report.py` and `--with python-pptx python slides/build_slides.py`.
+01-06 refuse to run again once the freeze / holdout marks exist (by design). `02_data` also reads the textbook's ETF files (`~/Downloads/machine-learning-for-trading`) for two cross-checks.
+PDF and slides: `pip install reportlab python-pptx pillow`, then `python report/build_report.py` and `python slides/build_slides.py`.
 
 Notebooks are percent-format `.py` files paired with unexecuted `.ipynb` copies (jupytext).
 
@@ -39,7 +46,7 @@ the deployed strategy turned out to be the baseline rule itself, so its row appe
 files only (no refit, no re-simulation). Both facts are in the ledger.
 
 ## Why numbers could differ
-Seeds are fixed (LightGBM 42, bootstrap 7). Yahoo revises adjusted prices, so a later download can differ slightly (download time in `data/download_meta.json`; the committed parquet files are the ones used).
+Seeds are fixed (LightGBM 42, bootstrap 7). Yahoo revises adjusted prices (see above), so a later download can differ slightly; download time is in `data/download_meta.json` and the committed parquet files are the ones used for every reported number.
 
 ## Disclosures
 Three earlier versions of this project (v1: 734 backtests; v2: 52 variants; v3: 60 variants) are counted as trials (inclusive N = 906 for the Deflated Sharpe).

@@ -1,7 +1,7 @@
-# Environment: the textbook repository's uv environment (Python 3.14) plus:
+# Python 3.12+ (developed on 3.14). Install: uv venv && uv pip install -r requirements.txt
+# Exact versions used for the reported results are in requirements.lock.txt.
 pandas
 numpy
-polars
 pyarrow
 scipy
 scikit-learn
@@ -9,6 +9,9 @@ lightgbm
 shap
 pyyaml
 matplotlib
+yfinance
+jupytext
+# only for rebuilding the PDF and slides
 reportlab
 python-pptx
-jupytext
+pillow
